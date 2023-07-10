@@ -6,26 +6,29 @@ const Button = (props) => {
       {props.text}
     </button>
   );
-}
+};
+
+const StatisticLine = (props) => {
+  const { text, value } = props;
+  return <div>{text}: {value}</div>
+};
 
 const Statistics = (props) => {
-  console.log('statistics props: ', props);
+  // console.log('statistics props: ', props);
   const { good, neutral, bad, total, avg, positive } = props;
 
   if (total === 0){
-    return (
-      <div><p>no feedback given</p></div>
-    )
+    return <div><p>no feedback given</p></div>;
   }
 
   return (
     <div>
-      <div>good: {good}</div>
-      <div>neutral: {neutral}</div>
-      <div>bad: {bad}</div>
-      <div>all: {total}</div>
-      <div>average: {avg}</div>
-      <div>positive: {positive}%</div>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={total} />
+      <StatisticLine text="average" value={avg} />
+      <StatisticLine text="positive" value={`${positive}%`} />
     </div>
   );
 };
@@ -57,6 +60,6 @@ const App = () => {
       />
     </div>
   );
-}
+};
 
 export default App;
