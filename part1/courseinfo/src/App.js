@@ -10,11 +10,12 @@ const Header = (props) => {
 
 const Content = (props) => {
   console.log('Content props: ', props);
-  // console.log('Content props.name: ', props.part.name);
 
   return (
     <div>
-      <Part name={props.part.name} count={props.part.exercises}/>
+      {props.parts.map((part, index) => (
+        <Part key={index} name={part.name} count={part.exercises} />
+      ))}
     </div>
   )
 }
@@ -23,44 +24,43 @@ const Part = (props) => {
   console.log('Part props: ', props);
 
   return (
-    <p>{props.name} {props.count}</p>
+    <p>{props.name}: {props.count}</p>
   )
 }
 
 const Total = (props) => {
   console.log('Total props: ', props);
+  const totalExercises = props.parts.reduce((total, part) => total + part.exercises, 0);
 
   return (
     <div>
-      <p>Number of exercises {props.exercises1.exercises + props.exercises2.exercises + props.exercises3.exercises}</p>
+      <p>Number of exercises {totalExercises}</p>
     </div>
   )
 }
 
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10,
-  }
-
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7,
-  }
-
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14,
-  }
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10,
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7,
+    },
+    {
+      name: 'State of a component',
+      exercises: 14,
+    },
+  ]
 
   return (
     <div>
       <Header course={course} />
-      <Content part={part1} />
-      <Content part={part2} />
-      <Content part={part3} />
-      <Total exercises1={part1} exercises2={part2} exercises3={part3}/>
+      <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   )
 }
