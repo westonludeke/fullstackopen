@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+// const points = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0};
+// const copy = { ...points };
+
 const Button = (props) => {
   return (
     <button onClick={props.handleClick}>
@@ -20,7 +23,8 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState({});
 
   const handleNextAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
@@ -28,12 +32,25 @@ const App = () => {
     setSelected(randomIndex);
   }
 
+  const handleVote = () => {
+    const updatedPoints = { ...points };
+    updatedPoints[selected] = (updatedPoints[selected] || 0) + 1;
+    setPoints(updatedPoints);
+    console.log('updatedPoints: ', updatedPoints);
+  }
+
+  const currentVotes = points[selected] || 0;
+
   return (
     <div>
       <div>{anecdotes[selected]}</div>
+      <div>has {currentVotes} votes</div>
+      <div><Button handleClick={handleVote} text="vote" /></div>
       <div><Button handleClick={handleNextAnecdote} text="next anecdote" /></div>
     </div>
   )
 };
 
 export default App
+
+
