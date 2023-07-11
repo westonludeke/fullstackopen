@@ -41,12 +41,37 @@ const App = () => {
 
   const currentVotes = points[selected] || 0;
 
+  const getMaxVotes = () => {
+    const maxVotes = Math.max(...Object.values(points));
+    const anecdotesWithMaxVotes = Object.entries(points)
+      .filter(([_, votes]) => votes === maxVotes)
+      .map(([index]) => parseInt(index));
+
+    return anecdotesWithMaxVotes;
+  }
+
+  const anecdotesWithMaxVotes = getMaxVotes();
+
   return (
     <div>
-      <div>{anecdotes[selected]}</div>
-      <div>has {currentVotes} votes</div>
-      <div><Button handleClick={handleVote} text="vote" /></div>
-      <div><Button handleClick={handleNextAnecdote} text="next anecdote" /></div>
+      <div><h2>Anecdote of the Day</h2></div>
+      <div>{anecdotes[selected]}</div>&nbsp;
+      <div>Total votes: {currentVotes}</div>&nbsp;
+      <div>
+        <Button handleClick={handleVote} text="vote" />&nbsp;
+        <Button handleClick={handleNextAnecdote} text="next anecdote" />
+      </div>
+      <div><h2>Anecdote with the most votes</h2></div>
+      {anecdotesWithMaxVotes.length === 0 ? (
+          <p>None</p>
+        ) : (
+          anecdotesWithMaxVotes.map((index) => (
+            <div key={index}>
+              <p>{anecdotes[index]}</p>
+              <p>Total votes: {points[index]}</p>
+            </div>
+          ))
+        )}
     </div>
   )
 };
