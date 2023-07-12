@@ -1,24 +1,30 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: 'Arto Hellas', id: 1 }]); 
+  const [persons, setPersons] = useState([{ name: 'Arto Hellas', id: 1 }]);
   const [newName, setNewName] = useState('');
 
   const addPerson = (event) => {
     event.preventDefault();
+
+    if (persons.some((person) => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+      return;
+    }
+
     const personObject = {
       name: newName,
       id: persons.length + 1
-    }
+    };
 
     setPersons(persons.concat(personObject));
     setNewName('');
-  }
+  };
 
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
-  }
-  // console.log(persons);
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -35,7 +41,7 @@ const App = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
