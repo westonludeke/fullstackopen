@@ -11,15 +11,12 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    console.log('effect');
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
-        console.log('promise fulfilled');
         setPersons(response.data);
       });
   }, []);
-  console.log('render: ', persons.length, 'persons');
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -35,10 +32,17 @@ const App = () => {
       id: persons.length + 1
     };
 
-    setPersons(persons.concat(personObject));
-    setNewName('');
-    setNewNumber('');
-  };
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+          setPersons(persons.concat(personObject));
+          setNewName('');
+          setNewNumber('');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };  
 
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
