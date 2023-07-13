@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonForm from './components/PersonForm';
-import Persons from './components/Persons';
+import Person from './components/Person';
 import Filter from './components/Filter';
 
 const App = () => {
@@ -72,7 +72,7 @@ const App = () => {
         addPerson={addPerson}
       />
       <h3>Contacts:</h3>
-      <Persons persons={filteredPersons} />
+      <Person persons={filteredPersons} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Persons = ({ persons }) => {
+const Person = ({ persons }) => {
   return (
     <div>
       {persons.map((person) => (
@@ -12,4 +12,4 @@ const Persons = ({ persons }) => {
   );
 };
 
-export default Persons;
+export default Person;
