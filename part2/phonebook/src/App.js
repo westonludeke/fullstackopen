@@ -27,10 +27,12 @@ const App = () => {
       return;
     }
 
+    const maxId = persons.length > 0 ? Math.max(...persons.map((person) => person.id)) : 0;
+
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: maxId + 1
     }
 
     personService
