@@ -29,6 +29,26 @@
       "name": "Joe Blow",
       "number": "544-444-4444",
       "id": 6
+    },
+    {
+      "name": "Tupac Shakur",
+      "number": "213-death-row",
+      "id": 7
+    },
+    {
+      "name": "Biggie Smalls",
+      "number": "212-555-5555",
+      "id": 8
+    },
+    {
+      "name": "Too Short",
+      "number": "123",
+      "id": 9
+    },
+    {
+      "name": "James Prince",
+      "number": "713-mob-ties",
+      "id": 10
     }
   ]
 }
