@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "040-123456",
+      "number": "045-123456",
       "id": 1
     },
     {
@@ -11,13 +11,8 @@
       "id": 2
     },
     {
-      "name": "Bob Smith",
-      "number": "555-555-5555",
-      "id": 4
-    },
-    {
       "name": "Joe Blow",
-      "number": "444-444-4444",
+      "number": "555-555-5555",
       "id": 5
     }
   ]
