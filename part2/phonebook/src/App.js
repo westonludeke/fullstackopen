@@ -32,7 +32,7 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1
     }
-    
+
     personService
       .create(personObject)
       .then(returnedPerson => {
@@ -58,6 +58,17 @@ const App = () => {
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
 
+  const deletePerson = (id) => {
+    axios.delete(`http://localhost:3001/persons/${id}`)
+      .then(response => {
+        const updatedPersons = persons.filter(person => person.id !== id);
+        setPersons(updatedPersons);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -70,7 +81,7 @@ const App = () => {
         addPerson={addPerson}
       />
       <h3>Contacts:</h3>
-      <Person persons={filteredPersons} />
+      <Person persons={filteredPersons} deletePerson={deletePerson} />
     </div>
   );
 };

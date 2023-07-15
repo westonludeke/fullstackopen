@@ -14,41 +14,6 @@
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "Bob Smith",
-      "number": "555-555-5555",
-      "id": 5
-    },
-    {
-      "name": "Joe Blow",
-      "number": "544-444-4444",
-      "id": 6
-    },
-    {
-      "name": "Tupac Shakur",
-      "number": "213-death-row",
-      "id": 7
-    },
-    {
-      "name": "Biggie Smalls",
-      "number": "212-555-5555",
-      "id": 8
-    },
-    {
-      "name": "Too Short",
-      "number": "123",
-      "id": 9
-    },
-    {
-      "name": "James Prince",
-      "number": "713-mob-ties",
-      "id": 10
     }
   ]
 }
