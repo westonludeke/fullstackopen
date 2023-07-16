@@ -22,6 +22,15 @@ function App() {
     setSearchQuery(event.target.value);
   };
 
+  const formatWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  const calculateSquareMiles = (areaKm2) => {
+    const conversionFactor = 0.386102; // 1 square kilometer = 0.386102 square miles
+    return (areaKm2 * conversionFactor).toFixed(0);
+  };
+
   const filteredCountries = searchQuery
     ? countries.filter((country) =>
         country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
@@ -41,7 +50,10 @@ function App() {
         <div>
           <h2>{filteredCountries[0].name.common}</h2>
           <p>Capital: {filteredCountries[0].capital[0]}</p>
-          <p>Area: {filteredCountries[0].area} km²</p>
+          <p>
+            Area: {formatWithCommas(filteredCountries[0].area)} km² (
+            {formatWithCommas(calculateSquareMiles(filteredCountries[0].area))} mi²)
+          </p>
           <p>Languages: {Object.values(filteredCountries[0].languages).join(', ')}</p>
           <p>
             <img
