@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('https://studies.cs.helsinki.fi/restcountries/api/all')
+      .get('https://restcountries.com/v3.1/all')
       .then((response) => {
         setCountries(response.data);
       })
@@ -35,8 +35,8 @@ function App() {
         <span>find countries: </span>
         <input type="text" value={searchQuery} onChange={handleSearch} />
       </div>
-      {filteredCountries.length === 0 ? (
-        <p></p>
+      {searchQuery && filteredCountries.length > 10 ? (
+        <p>Too many matches, please refine your search.</p>
       ) : (
         <ul>
           {filteredCountries.map((country) => (
