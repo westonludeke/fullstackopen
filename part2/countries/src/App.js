@@ -43,6 +43,13 @@ function App() {
           <p>Capital: {filteredCountries[0].capital[0]}</p>
           <p>Area: {filteredCountries[0].area} km²</p>
           <p>Languages: {Object.values(filteredCountries[0].languages).join(', ')}</p>
+          <p>
+            <img
+              src={filteredCountries[0].flags.png}
+              alt={filteredCountries[0].flags.alt}
+              width="200"
+            />
+          </p>
         </div>
       ) : (
         <ul>
