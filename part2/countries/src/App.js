@@ -37,6 +37,13 @@ function App() {
       </div>
       {searchQuery && filteredCountries.length > 10 ? (
         <p>Too many matches, please refine your search.</p>
+      ) : filteredCountries.length === 1 ? (
+        <div>
+          <h2>{filteredCountries[0].name.common}</h2>
+          <p>Capital: {filteredCountries[0].capital[0]}</p>
+          <p>Area: {filteredCountries[0].area} km²</p>
+          <p>Languages: {Object.values(filteredCountries[0].languages).join(', ')}</p>
+        </div>
       ) : (
         <ul>
           {filteredCountries.map((country) => (
