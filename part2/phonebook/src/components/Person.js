@@ -12,10 +12,10 @@ const Person = ({ persons, deletePerson }) => {
   return (
     <div>
       {persons.map((person) => (
-        <div key={person.id}>
-          {person.name}: {person.number}
+        <li key={person.id}>
+          {person.name}: {person.number}&nbsp;
           <button onClick={() => handleDelete(person.id, person.name)}>Delete</button>
-        </div>
+        </li>
       ))}
     </div>
   );
