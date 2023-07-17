@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-
 import './index.css';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [weather, setWeather] = useState(null);
 
   useEffect(() => {
     axios
@@ -37,11 +37,43 @@ function App() {
     setSelectedCountry(country);
   };
 
+  const convertToCelsius = (kelvin) => {
+    return (kelvin - 273.15).toFixed(2);
+  };
+
+  const convertToFahrenheit = (kelvin) => {
+    return ((kelvin - 273.15) * 9 / 5 + 32).toFixed(2);
+  };
+
   const filteredCountries = searchQuery
     ? countries.filter((country) =>
         country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : [];
+
+  const fetchWeather = useCallback((city) => {
+    const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+    const capitalInfo = selectedCountry.capitalInfo;
+    const lat = capitalInfo.latlng[0];
+    const lon = capitalInfo.latlng[1];
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    console.log('apiUrl: ', apiUrl);
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        setWeather(response.data);
+      })
+      .catch((error) => {
+        console.log('Error fetching weather data:', error);
+      });
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      fetchWeather(selectedCountry.capital[0]);
+    }
+  }, [selectedCountry, fetchWeather]);
 
   return (
     <div className="App">
@@ -70,6 +102,13 @@ function App() {
               width="200"
             />
           </p>
+          {weather && (
+          <div>
+            <h3>Weather in {filteredCountries[0].capital[0]}</h3>
+            <p>Temperature: {convertToCelsius(weather.main.temp)} °C ({convertToFahrenheit(weather.main.temp)} °F)</p>
+            <p>Wind: {weather.wind.speed} m/s</p>
+          </div>
+        )}
         </div>
       ) : selectedCountry ? (
         <div>
@@ -87,6 +126,13 @@ function App() {
               width="200"
             />
           </p>
+          {weather && (
+          <div>
+            <h3>Weather in {selectedCountry.capital[0]}</h3>
+            <p>Temperature: {convertToCelsius(weather.main.temp)} °C ({convertToFahrenheit(weather.main.temp)} °F)</p>
+            <p>Wind: {weather.wind.speed} m/s</p>
+          </div>
+        )}
         </div>
       ) : (
         <ul>
