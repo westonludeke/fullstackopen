@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './index.css';
-import Weather from './components/Weather';
+import CountryDetails from './components/CountryDetails';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,15 +23,6 @@ function App() {
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
     setSelectedCountry(null); // Reset the selectedCountry when performing a new search
-  };
-
-  const formatWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
-
-  const calculateSquareMiles = (areaKm2) => {
-    const conversionFactor = 0.386102; // 1 square kilometer = 0.386102 square miles
-    return (areaKm2 * conversionFactor).toFixed(2);
   };
 
   const handleShowButtonClick = (country) => {
@@ -77,43 +68,9 @@ function App() {
       {searchQuery && filteredCountries.length > 10 ? (
         <p>Too many matches, please refine your search.</p>
       ) : filteredCountries.length === 1 ? (
-        <div>
-          <h2>{filteredCountries[0].name.common}</h2>
-          <p>Capital: {filteredCountries[0].capital[0]}</p>
-          <p>
-            Area: {formatWithCommas(filteredCountries[0].area)} km² (
-            {formatWithCommas(calculateSquareMiles(filteredCountries[0].area))} mi²)
-          </p>
-          <p>
-            Languages: {Object.values(filteredCountries[0].languages).join(', ')}
-          </p>
-          <p>
-            <img
-              src={filteredCountries[0].flags.png}
-              alt={filteredCountries[0].flags.alt}
-              width="200"
-            />
-          </p>
-          {weather && <Weather weather={weather} capital={filteredCountries[0].capital[0]} />}
-        </div>
+        <CountryDetails country={filteredCountries[0]} />
       ) : selectedCountry ? (
-        <div>
-          <h2>{selectedCountry.name.common}</h2>
-          <p>Capital: {selectedCountry.capital[0]}</p>
-          <p>
-            Area: {formatWithCommas(selectedCountry.area)} km² (
-            {formatWithCommas(calculateSquareMiles(selectedCountry.area))} mi²)
-          </p>
-          <p>Languages: {Object.values(selectedCountry.languages).join(', ')}</p>
-          <p>
-            <img
-              src={selectedCountry.flags.png}
-              alt={selectedCountry.flags.alt}
-              width="200"
-            />
-          </p>
-          {weather && <Weather weather={weather} capital={selectedCountry.capital[0]} />}
-        </div>
+        <CountryDetails country={selectedCountry} />
       ) : (
         <ul>
           {filteredCountries.map((country) => (
