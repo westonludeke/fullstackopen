@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './index.css';
+import Weather from './components/Weather';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,14 +38,6 @@ function App() {
     setSelectedCountry(country);
   };
 
-  const convertToCelsius = (kelvin) => {
-    return (kelvin - 273.15).toFixed(2);
-  };
-
-  const convertToFahrenheit = (kelvin) => {
-    return ((kelvin - 273.15) * 9 / 5 + 32).toFixed(2);
-  };
-
   const filteredCountries = searchQuery
     ? countries.filter((country) =>
         country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
@@ -57,7 +50,6 @@ function App() {
     const lat = capitalInfo.latlng[0];
     const lon = capitalInfo.latlng[1];
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-    console.log('apiUrl: ', apiUrl);
 
     axios
       .get(apiUrl)
@@ -102,13 +94,7 @@ function App() {
               width="200"
             />
           </p>
-          {weather && (
-          <div>
-            <h3>Weather in {filteredCountries[0].capital[0]}</h3>
-            <p>Temperature: {convertToCelsius(weather.main.temp)} °C ({convertToFahrenheit(weather.main.temp)} °F)</p>
-            <p>Wind: {weather.wind.speed} m/s</p>
-          </div>
-        )}
+          {weather && <Weather weather={weather} capital={filteredCountries[0].capital[0]} />}
         </div>
       ) : selectedCountry ? (
         <div>
@@ -126,13 +112,7 @@ function App() {
               width="200"
             />
           </p>
-          {weather && (
-          <div>
-            <h3>Weather in {selectedCountry.capital[0]}</h3>
-            <p>Temperature: {convertToCelsius(weather.main.temp)} °C ({convertToFahrenheit(weather.main.temp)} °F)</p>
-            <p>Wind: {weather.wind.speed} m/s</p>
-          </div>
-        )}
+          {weather && <Weather weather={weather} capital={selectedCountry.capital[0]} />}
         </div>
       ) : (
         <ul>
