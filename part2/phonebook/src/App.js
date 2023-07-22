@@ -113,7 +113,7 @@ const App = () => {
   );
 
   const deletePerson = (id) => {
-    axios.delete(`http://localhost:3001/api/persons/${id}`)
+    axios.delete(`/api/persons/${id}`)
       .then(response => {
         const updatedPersons = persons.filter(person => person.id !== id);
         setPersons(updatedPersons);
