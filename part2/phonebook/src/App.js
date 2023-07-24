@@ -86,16 +86,11 @@ const App = () => {
       }, 5000);
       })
       .catch((error) => {
+        // Extract the relevant part of the error message
+        const errorMessage = error.response?.data?.error || 'Error adding a new person';
         console.log(error);
-        if (error.response && error.response.data && error.response.data.error) {
-          // The server returned an error message, display it to the user
-          setNotification(error.response.data.error);
-        } else {
-          // Some other unexpected error occurred, display a generic error message
-          setNotification('Error adding the person. Please try again later.');
-        }
+        setNotification(errorMessage);
         // setNotification(`Error adding ${newName}`);
-
         setNotificationType('error');
         setTimeout(() => {
         setNotification(null);
