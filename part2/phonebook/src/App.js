@@ -88,7 +88,8 @@ const App = () => {
       .catch((error) => {
       // Extract the relevant part of the error message
       const errorMessage = error.response?.data?.error || 'Error adding a new person';
-
+      console.log('error.message: ', error.message);
+      console.log('errorMessage: ', errorMessage);
       // Check if the error includes 'name' or 'number' and construct the appropriate error message
       let customErrorMessage;
       if (error.message.includes('name')) {
@@ -99,7 +100,7 @@ const App = () => {
         customErrorMessage = errorMessage;
       }
 
-      console.log('errorMessage: ', customErrorMessage);
+      console.log('customErrorMessage: ', customErrorMessage);
       console.log(error);
       setNotification(customErrorMessage);
       // setNotification(`Error adding ${newName}`);
