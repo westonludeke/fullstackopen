@@ -88,6 +88,7 @@ const App = () => {
       .catch((error) => {
         // Extract the relevant part of the error message
         const errorMessage = error.response?.data?.error || 'Error adding a new person';
+        console.log('errorMessage: ', errorMessage);
         console.log(error);
         setNotification(errorMessage);
         // setNotification(`Error adding ${newName}`);
