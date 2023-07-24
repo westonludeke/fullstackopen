@@ -86,30 +86,18 @@ const App = () => {
       }, 5000);
       })
       .catch((error) => {
-      // Extract the relevant part of the error message
-      const errorMessage = error.response?.data?.error || 'Error adding a new person';
-      console.log('error.message: ', error.message);
-      console.log('errorMessage: ', errorMessage);
-      // Check if the error includes 'name' or 'number' and construct the appropriate error message
-      let customErrorMessage;
-      if (error.message.includes('name')) {
-        customErrorMessage = 'The name field is required and should be at least 3 characters long';
-      } else if (error.message.includes('number')) {
-        customErrorMessage = 'The number field is required and should be at least 3 characters long';
-      } else {
-        customErrorMessage = errorMessage;
-      }
-
-      console.log('customErrorMessage: ', customErrorMessage);
-      console.log(error);
-      setNotification(customErrorMessage);
-      // setNotification(`Error adding ${newName}`);
-      setNotificationType('error');
-      setTimeout(() => {
+        console.log(error);
+        if (error.response && error.response.data && error.response.data.error) {
+          setNotification(error.response.data.error);
+        } else {
+          setNotification('Error adding the person. Please try again later.');
+        }
+        setNotificationType('error');
+        setTimeout(() => {
         setNotification(null);
         setNotificationType('');
       }, 5000);
-    });
+      });
   };
 
   const handlePersonChange = (event) => {
