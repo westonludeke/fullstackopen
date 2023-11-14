@@ -71,6 +71,8 @@ function App() {
         <CountryDetails country={filteredCountries[0]} />
       ) : selectedCountry ? (
         <CountryDetails country={selectedCountry} />
+      ) : filteredCountries.length === 0 && searchQuery ? (
+        <p>not found...</p>
       ) : (
         <ul>
           {filteredCountries.map((country) => (
