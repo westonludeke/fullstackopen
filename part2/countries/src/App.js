@@ -2,23 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './index.css';
 import CountryDetails from './components/CountryDetails';
+import useCountry from './hooks/useCountry';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState(null);
   const [weather, setWeather] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get('https://restcountries.com/v3.1/all')
-      .then((response) => {
-        setCountries(response.data);
-      })
-      .catch((error) => {
-        console.log('Error fetching data:', error);
-      });
-  }, []);
+  const { filteredCountries, selectedCountry, setSelectedCountry } = useCountry(searchQuery);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -29,34 +18,28 @@ function App() {
     setSelectedCountry(country);
   };
 
-  const filteredCountries = searchQuery
-    ? countries.filter((country) =>
-        country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
+  const fetchWeather = useCallback(() => {
+    if (selectedCountry && selectedCountry.capitalInfo) {
+      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+      const { latlng } = selectedCountry.capitalInfo;
+      const lat = latlng[0];
+      const lon = latlng[1];
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-  const fetchWeather = useCallback((city) => {
-    const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
-    const capitalInfo = selectedCountry.capitalInfo;
-    const lat = capitalInfo.latlng[0];
-    const lon = capitalInfo.latlng[1];
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        setWeather(response.data);
-      })
-      .catch((error) => {
-        console.log('Error fetching weather data:', error);
-      });
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          setWeather(response.data);
+        })
+        .catch((error) => {
+          console.log('Error fetching weather data:', error);
+        });
+    }
   }, [selectedCountry]);
 
   useEffect(() => {
-    if (selectedCountry) {
-      fetchWeather(selectedCountry.capital[0]);
-    }
-  }, [selectedCountry, fetchWeather]);
+    fetchWeather();
+  }, [fetchWeather]);
 
   return (
     <div className="App">
