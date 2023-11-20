@@ -1,16 +1,18 @@
 {
-  "name": "app",
+  "name": "fs-open",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "ts-node": "ts-node"
+    "ts-node": "ts-node",
+
+    "multiply": "ts-node multiplier.ts",
+    "calculate": "ts-node calculator.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "ts-node": "^10.9.1",
-    "typescript": "^5.3.2"
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
   }
 }
