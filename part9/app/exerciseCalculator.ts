@@ -39,7 +39,28 @@ const calculateExercises = (dailyHours: number[], target: number): ExerciseResul
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+const parseArguments = (args: Array<string>): { target: number, dailyHours: number[] } => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  const target = Number(args[2]);
+  const dailyHours = args.slice(3).map(arg => Number(arg));
+
+  if (isNaN(target) || dailyHours.some(isNaN)) {
+    throw new Error('Provided values were not numbers!');
+  }
+
+  return {
+    target,
+    dailyHours
+  };
+};
+
+try {
+  const { target, dailyHours } = parseArguments(process.argv);
+  console.log(calculateExercises(dailyHours, target));
+} catch (e) {
+  console.log('Error:', e.message);
+}
 
 
 
