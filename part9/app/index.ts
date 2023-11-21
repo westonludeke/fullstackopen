@@ -1,5 +1,6 @@
 import express from 'express';
 import { calculateBmi } from './bmiCalculator';
+import { calculator } from './calculator';
 
 const app = express();
 
@@ -34,6 +35,13 @@ app.get('/bmi', (req, res) => {
   }
 
   res.json(response);
+});
+
+app.post('/calculate', (req, res) => {
+  const { value1, value2, op } = req.body;
+
+  const result = calculator(value1, value2, op);
+  res.send({ result });
 });
 
 const PORT = 3003;
