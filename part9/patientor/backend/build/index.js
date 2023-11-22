@@ -9,7 +9,7 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 const PORT = 3001;
-app.get('/ping', (_req, res) => {
+app.get('/api/ping', (_req, res) => {
     console.log('someone pinged here');
     res.send('pong');
 });
