@@ -1,6 +1,6 @@
 import express from 'express';
 import { calculateBmi } from './bmiCalculator';
-import { calculator } from './calculator';
+import { calculator, Operation } from './calculator';
 
 const app = express();
 
@@ -38,9 +38,17 @@ app.get('/bmi', (req, res) => {
 });
 
 app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { value1, value2, op } = req.body;
 
-  const result = calculator(value1, value2, op);
+  if ( !value1 || isNaN(Number(value1)) ) {
+    return res.status(400).send({ error: '...'});
+  }
+
+  const operation = op as Operation;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const result = calculator(Number(value1), Number(value2), operation);
   res.send({ result });
 });
 
